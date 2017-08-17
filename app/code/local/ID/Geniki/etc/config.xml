@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+        <ID_Geniki>
+            <version>0.1.0</version>
+        </ID_Geniki>
+    </modules>
+
+    <frontend>
+        <routers>
+            <geniki>
+                <use>standard</use>
+                <args>
+                    <module>ID_Geniki</module>
+                    <frontName>geniki</frontName>
+                </args>
+            </geniki>
+        </routers>
+
+        <translate>
+            <modules>
+                <ID_Geniki>
+                    <files>
+                        <default>ID_Geniki.csv</default>
+                    </files>
+                </ID_Geniki>
+            </modules>
+        </translate>
+    </frontend>
+
+    <admin>
+	    <routers>
+	        <adminhtml>
+	            <args>
+	                <modules>
+	                    <ID_Geniki before="Mage_Adminhtml">ID_Geniki_Adminhtml</ID_Geniki>
+	                </modules>
+	            </args>
+	        </adminhtml>
+	    </routers>
+	</admin>
+
+	<adminhtml>
+	    <events>
+	        <adminhtml_widget_container_html_before>
+	            <observers>
+	                <geniki>
+	                    <class>ID_Geniki_Model_Observer</class>
+	                    <method>addButtonVoucher</method>
+	                </geniki>
+	            </observers>
+	        </adminhtml_widget_container_html_before>
+
+	    	<core_block_abstract_prepare_layout_before>
+                <observers>
+                    <geniki_mass>
+                        <class>ID_Geniki_Model_Observer</class>
+                        <method>addActions</method>
+                    </geniki_mass>
+                </observers>
+            </core_block_abstract_prepare_layout_before>
+
+            <adminhtml_sales_order_create_process_data_before>
+                <observers>
+                    <geniki_customprice>
+                        <class>ID_Geniki_Model_Observer</class>
+                        <method>saveCustomData</method>
+                    </geniki_customprice>
+                </observers>
+            </adminhtml_sales_order_create_process_data_before>
+	    </events>
+
+        <translate>
+            <modules>
+                <ID_Geniki>
+                    <files>
+                        <default>ID_Geniki.csv</default>
+                    </files>
+                </ID_Geniki>
+            </modules>
+        </translate>
+	</adminhtml>
+
+	<global>
+
+        <fieldsets>
+            <sales_convert_quote>
+                <field_custom_price><to_order>*</to_order></field_custom_price>
+            </sales_convert_quote>
+
+            <sales_convert_order>
+                <field_custom_price><to_quote>*</to_quote></field_custom_price>
+            </sales_convert_order>
+        </fieldsets>
+
+        <resources>
+            <id_geniki_setup>
+                <setup>
+                    <module>ID_Geniki</module>
+                    <class>ID_Geniki_Model_Resource_Setup</class>
+                </setup>
+            </id_geniki_setup>
+        </resources>
+
+    	<helpers>
+        	<geniki>
+          		<class>ID_Geniki_Helper</class>
+        	</geniki>
+      	</helpers>
+
+        <models>
+            <id_geniki>
+                <class>ID_Geniki_Model</class>
+                <resourceModel>id_geniki_resource</resourceModel>
+            </id_geniki>
+
+            <id_geniki_resource>
+                <class>ID_Geniki_Model_Resource</class>
+                <entities>
+                    <list>
+                        <table>id_geniki_list</table>
+                    </list>
+                    <voucher>
+                        <table>id_geniki_voucher</table>
+                    </voucher>
+                    <antikatavoles>
+                        <table>id_geniki_antikatavoles</table>
+                    </antikatavoles>
+                </entities>
+            </id_geniki_resource>
+        </models>
+
+        <blocks>
+            <id_geniki>
+                <class>ID_Geniki_Block</class>
+            </id_geniki>
+
+            <adminhtml>
+                <rewrite>
+                    <sales_order_totals>ID_Geniki_Block_Adminhtml_Sales_Order_Totals</sales_order_totals>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+
+        <template>
+            <email>
+                <id_denied_order_email translate="label" module="core">
+                    <label>Denied order notification email</label>
+                    <file>denied_order.html</file>
+                    <type>html</type>
+                </id_denied_order_email>
+            </email>
+        </template>
+    </global>
+
+    <default>
+        <carriers>
+            <id_geniki>
+                <active>0</active>
+                <model>id_geniki/carrier</model>
+                <title>Γενική Ταχυδρομική</title>
+                <sort_order>10</sort_order>
+                <sallowspecific>0</sallowspecific>
+            </id_geniki>
+        </carriers>
+
+        <geniki>
+            <login>
+                <api_url>http://testvoucher.taxydromiki.gr/JobServices.asmx</api_url>
+                <appkey>demo</appkey>
+                <username>demo</username>
+                <password>demo</password>
+            </login>
+        </geniki>
+    </default>
+</config>

@@ -1,0 +1,9 @@
+<?php
+
+class ID_Geniki_Model_Resource_Antikatavoles_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
+{
+    protected function _construct()
+    {
+        $this->_init('id_geniki/antikatavoles', 'entity_id');
+    }
+}

@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <geniki translate="title" module="geniki">
+                                        <title>Γενική Ταχυδρομική</title>
+                                    </geniki>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+
+                    <geniki translate="title" module="geniki"><!-- this is the top  level menu -->
+                        <title>Γενική Ταχυδρομική</title>
+                        <children>
+                            <unprinted translate="title" module="geniki"><!-- this is the submenu item -->
+                                <title>Print Vouchers</title>
+                            </unprinted>
+                            <list translate="title" module="geniki"><!-- this is the submenu item -->
+                                <title>Οριστικοποίηση αποστολών</title>
+                            </list>
+                            <vouchers translate="title" module="geniki"><!-- this is the submenu item -->
+                                <title>Vouchers</title>
+                            </vouchers>
+                            <antikatavoles translate="title" module="geniki"><!-- this is the submenu item -->
+                                <title>Αντικαταβολές</title>
+                            </antikatavoles>
+                        </children>
+                    </geniki>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+
+    <menu>
+        <geniki translate="title" module="geniki">
+            <title>Γενική Ταχυδρομική</title>
+            <sort_order>25</sort_order>
+            <children>
+                <unprinted translate="title" module="geniki">
+                    <title>Print Vouchers</title>
+                    <sort_order>1</sort_order>
+                    <action>adminhtml/geniki/unprinted</action>
+                </unprinted>
+
+                <list translate="title" module="geniki">
+                    <title>Οριστικοποίηση αποστολών</title>
+                    <sort_order>2</sort_order>
+                    <action>adminhtml/geniki/getlist</action>
+                </list>
+
+                <vouchers translate="title" module="geniki">
+                    <title>Vouchers</title>
+                    <sort_order>991</sort_order>
+                    <action>adminhtml/geniki/vouchers</action>
+                </vouchers>
+
+                <antikatavoles translate="title" module="geniki">
+                    <title>Αντικαταβολές</title>
+                    <sort_order>992</sort_order>
+                    <action>adminhtml/geniki/antikatavoles</action>
+                </antikatavoles>
+            </children>
+        </geniki>
+    </menu>
+</config>

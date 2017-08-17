@@ -1,0 +1,8 @@
+<config>
+  <modules>
+    <ID_Geniki>
+      <active>true</active>
+      <codePool>local</codePool>
+    </ID_Geniki>
+  </modules>
+</config>
