@@ -10,16 +10,22 @@ class ID_Geniki_Model_Observer
 
 	    if( $container instanceof Mage_Adminhtml_Block_Sales_Order_View ) {
 	    	$order_obj = Mage::getModel('sales/order')->load($order['order_id']);
-	    	if( !$order_obj->isCanceled() && $order_obj->canShip() ) {
+	    	if( !$order_obj->isCanceled() && $order_obj->canShip() && (substr($order_obj->getShippingMethod(), 0, 10) === 'id_geniki_') ) {
 		        $data = array(
 		            'label'     => Mage::helper('geniki')->__('Create Voucher'),
 		            'class'     => 'go',
 		            'onclick'   => 'setLocation(\''  . Mage::helper('adminhtml')->getUrl('*/geniki/create', array('order' => $order['order_id'])) . '\')',
 		        );
 		        $container->addButton('create_voucher', $data);
+
+		        /*
+		         * Hide Ship and Invoice buttons
+		         */
+		        $container->removeButton('order_ship');
+		        $container->removeButton('order_invoice');
 		    }
 
-		    if( !$order_obj->isCanceled() && $order_obj->getStatus() == 'complete' ) {
+		    if( !$order_obj->isCanceled() && $order_obj->getStatus() == 'complete' && (substr($order_obj->getShippingMethod(), 0, 10) === 'id_geniki_') ) {
 		        $data = array(
 		            'label'     => Mage::helper('geniki')->__('Print Voucher'),
 		            'class'     => 'go',

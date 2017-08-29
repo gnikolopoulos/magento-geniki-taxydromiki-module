@@ -390,8 +390,8 @@ class ID_Geniki_Adminhtml_GenikiController extends Mage_Adminhtml_Controller_Act
 				$pod = $this->order->getTracksCollection()->getFirstItem()->getNumber();
 				$voucher = Mage::getModel('id_geniki/voucher')->load($pod, 'pod');
 				$params = array(
-					'sAuthKey' 	=> $this->auth_key, 
-					'nJobId' 	=> $voucher->jobid, 
+					'sAuthKey' 	=> $this->auth_key,
+					'nJobId' 	=> $voucher->jobid,
 					'bCancel' 	=> true
 				);
 				$response = $this->soap->CancelJob( $params );
