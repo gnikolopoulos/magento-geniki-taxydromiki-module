@@ -84,7 +84,7 @@ class ID_Geniki_IndexController extends Mage_Core_Controller_Front_Action
                             if( $this->send_sms ) {
                                 $this->sendSMS($order);
                             }
-                            continue;
+                            break;
                         }
                     }
     			}
