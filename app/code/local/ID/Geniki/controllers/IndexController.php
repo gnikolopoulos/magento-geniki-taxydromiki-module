@@ -22,6 +22,10 @@ class ID_Geniki_IndexController extends Mage_Core_Controller_Front_Action
         $this->appkey = Mage::getStoreConfig('geniki/login/appkey');
         $this->api_url = Mage::getStoreConfig('geniki/login/api_url');
         $this->send_sms = Mage::getStoreConfig('geniki/sms/send_sms');
+        
+        $this->sms_url = Mage::getStoreConfig('geniki/sms/sms_url');
+		$this->sms_user = Mage::getStoreConfig('geniki/sms/sms_user');
+		$this->sms_pass = Mage::getStoreConfig('geniki/sms/sms_pass');
 
         $this->soap = new SoapClient( $this->api_url );
 
@@ -113,10 +117,6 @@ class ID_Geniki_IndexController extends Mage_Core_Controller_Front_Action
             $emailTemplate->send( 'info@sportifs.gr' ,'Sportifs.gr', $emailTemplateVariables);
 
             Mage::app()->setCurrentStore($previousStore->getCode());
-
-            if( $this->send_sms ) {
-                $this->sendSMS($order);
-            }
         }
 
         return $this;
@@ -124,7 +124,6 @@ class ID_Geniki_IndexController extends Mage_Core_Controller_Front_Action
 
     private function sendSMS($order)
     {
-        $url = 'http://www.liveall.eu/webservice/sms/sendSMSHTTP.php';
         $message = 'ΕΝΗΜΕΡΩΘΗΚΑΜΕ ΓΙΑ ΤΗΝ ΑΡΝΗΣΗ ΠΑΡΑΛΑΒΗΣ ΤΗΣ ΠΑΡΑΓΓΕΛΙΑΣ ΣΑΣ #'.$order->getIncrementId().'.ΣΑΣ ΕΧΕΙ ΣΤΑΛΕΙ EMAIL ΣΧΕΤΙΚΑ ΜΕ ΤΗΝ ΟΦΕΙΛΗ ΣΑΣ ΒΑΣΕΙ ΤΩΝ ΟΡΩΝ ΠΟΥ ΕΧΕΤΕ ΑΠΟΔΕΧΘΕΙ.';
 
         $phone = $order->getShippingAddress()->getTelephone();
@@ -143,7 +142,7 @@ class ID_Geniki_IndexController extends Mage_Core_Controller_Front_Action
                     'batchuserinfo' => 'OrderDenied',
                     'pricecat'      => 0
                 );
-                $response = file_get_contents( $url.'?'.http_build_query($data) );
+                $response = file_get_contents( $this->sms_url.'?'.http_build_query($data) );
 
                 if( preg_match('#^OK ID:[0-9]{1,}#', $response) === 1 ) {
                     return true;
@@ -162,7 +161,7 @@ class ID_Geniki_IndexController extends Mage_Core_Controller_Front_Action
                             'batchuserinfo' => 'OrderDenied',
                             'pricecat'      => 0
                         );
-                $response = file_get_contents( $url.'?'.http_build_query($data) );
+                $response = file_get_contents( $this->sms_url.'?'.http_build_query($data) );
 
                 if( preg_match('#^OK ID:[0-9]{1,}#', $response) === 1 ) {
                     return true;
