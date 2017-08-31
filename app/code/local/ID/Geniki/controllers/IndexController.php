@@ -69,13 +69,13 @@ class ID_Geniki_IndexController extends Mage_Core_Controller_Front_Action
             $checkpoints = $response->TrackAndTraceResult->Checkpoints->Checkpoint;
 
             if( $response->Result == 0 ) {
-    			if( $response->Status == 'ΠΑΡΑΔΟΜΕΝΟ' ) {
+    			if( $response->TrackAndTraceResult->Status == 'ΠΑΡΑΔΟΜΕΝΟ' ) {
     				echo $order->getIncrementId() . ' Delivered<br />';
     				$order->setStatus("delivered");
     				$order->save();
     			} else {
                     foreach( $checkpoints as $points ) {
-                        if( $point->Status = 'Αδυναμία παράδοσης - Άρνηση Παραλαβής' || $point->Status = 'Επιστροφή στον αρχικό αποστολέα' ) {
+                        if( $point->Status == 'Αδυναμία παράδοσης - Άρνηση Παραλαβής' || $point->Status == 'Επιστροφή στον αρχικό αποστολέα' ) {
                             echo $order->getIncrementId() . ' Denied<br />';
                             $order->setStatus("denied");
                             $order->save();
@@ -109,8 +109,8 @@ class ID_Geniki_IndexController extends Mage_Core_Controller_Front_Action
             $emailTemplate->getProcessedTemplate($emailTemplateVariables);
             $emailTemplate->setSenderEmail(Mage::getStoreConfig('trans_email/ident_general/email', $storeId));
             $emailTemplate->setSenderName(Mage::getStoreConfig('trans_email/ident_general/name', $storeId));
-            $emailTemplate->send( $order->getCustomerEmail() ,'Fifth Element', $emailTemplateVariables);
-            $emailTemplate->send( 'info@fifthelement.gr' ,'Fifth Element', $emailTemplateVariables);
+            $emailTemplate->send( $order->getCustomerEmail() ,'Sportifs.gr', $emailTemplateVariables);
+            $emailTemplate->send( 'info@sportifs.gr' ,'Sportifs.gr', $emailTemplateVariables);
 
             Mage::app()->setCurrentStore($previousStore->getCode());
 
@@ -138,7 +138,7 @@ class ID_Geniki_IndexController extends Mage_Core_Controller_Front_Action
                     'username'      => 'info_486',
                     'password'      => 'Fifth$lement',
                     'destination'   => '30'.$phone,
-                    'sender'        => '5th Element',
+                    'sender'        => 'Sportifs.gr',
                     'message'       => $message,
                     'batchuserinfo' => 'OrderDenied',
                     'pricecat'      => 0
@@ -157,7 +157,7 @@ class ID_Geniki_IndexController extends Mage_Core_Controller_Front_Action
                             'username'      => 'info_486',
                             'password'      => 'Fifth$lement',
                             'destination'   => '30'.$fax,
-                            'sender'        => '5th Element',
+                            'sender'        => 'Sportifs.gr',
                             'message'       => $message,
                             'batchuserinfo' => 'OrderDenied',
                             'pricecat'      => 0
