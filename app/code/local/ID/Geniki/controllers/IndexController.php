@@ -135,8 +135,8 @@ class ID_Geniki_IndexController extends Mage_Core_Controller_Front_Action
             if ( preg_match('#^69#', $phone) === 1 && strlen($phone) == 10 ) {
                 // Is valid mobile
                 $data = array(
-                    'username'      => 'info_486',
-                    'password'      => 'Fifth$lement',
+                    'username'      => $this->sms_user,
+                    'password'      => $this->sms_pass,
                     'destination'   => '30'.$phone,
                     'sender'        => 'Sportifs.gr',
                     'message'       => $message,
@@ -154,8 +154,8 @@ class ID_Geniki_IndexController extends Mage_Core_Controller_Front_Action
             } elseif( preg_match('#^69#', $fax) === 1 && strlen($fax) == 10 ) {
                 // Is valid mobile
                 $data = array(
-                            'username'      => 'info_486',
-                            'password'      => 'Fifth$lement',
+                            'username'      => $this->sms_user,
+                            'password'      => $this->sms_pass,
                             'destination'   => '30'.$fax,
                             'sender'        => 'Sportifs.gr',
                             'message'       => $message,
