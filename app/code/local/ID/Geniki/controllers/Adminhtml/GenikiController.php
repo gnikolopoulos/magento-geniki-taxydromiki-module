@@ -106,7 +106,7 @@ class ID_Geniki_Adminhtml_GenikiController extends Mage_Adminhtml_Controller_Act
 				} else {
 					$amount = $this->order->getGrandTotal();
 				}
-				$extras[] = 'ΑΝ'; // Ελληνικά
+				$extras[] = 'ΑΜ'; // Ελληνικά
 			} else {
 				// Άλλο
 				$amount = 0;
