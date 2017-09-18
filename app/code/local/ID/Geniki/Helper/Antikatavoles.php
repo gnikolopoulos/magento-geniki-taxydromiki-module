@@ -110,7 +110,7 @@ class ID_Geniki_Helper_Antikatavoles extends Mage_Core_Helper_Abstract
 	 
 	private function convert_file_to_utf8($csvfile) {
 	    $utfcheck = file_get_contents($csvfile);
-	    $utfcheck = utf16_to_utf8($utfcheck);
+	    $utfcheck = $this->utf16_to_utf8($utfcheck);
 	    file_put_contents($csvfile,$utfcheck);
 	}
 
