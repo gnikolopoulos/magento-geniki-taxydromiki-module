@@ -11,7 +11,7 @@ class ID_Geniki_Block_Adminhtml_Antikatavoles extends Mage_Adminhtml_Block_Widge
         $this->_headerText         = Mage::helper('geniki')->__('Antikatavoles');
 
         $this->_addButton('uploadxls', array(
-	        'label' 		=> Mage::helper('geniki')->__('Upload XLS'),
+	        'label' 		=> Mage::helper('geniki')->__('Upload CSV'),
 	        'onclick'       => 'document.getElementById(\'uploadTarget\').click();',
 	        'class' 		    => 'add',
 	        'after_html'    => '<form method="POST" action="'.$this->getUrl('*/geniki/uploadxls', array()).'" id="uploadForm" enctype="multipart/form-data">
