@@ -16,7 +16,7 @@ class ID_Geniki_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstract imple
         //$request->getPackageValueWithDiscount(); //Get order total after discount
 
         $result->append($this->_getStandardShippingRate($request));
-        $result->append($this->_getReceptionShippingRate($request));
+        //$result->append($this->_getReceptionShippingRate($request));
         if( Mage::app()->getStore()->isAdmin() || Mage::getDesign()->getArea() == 'adminhtml' ) {
             $result->append($this->_getReturnShippingRate($request));
             $result->append($this->_getFreeShippingRate($request));
@@ -211,7 +211,7 @@ class ID_Geniki_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstract imple
     {
         return array(
             'standard' => $this->getConfigData('label_standard'),
-            'reception' => $this->getConfigData('label_reception'),
+            //'reception' => $this->getConfigData('label_reception'),
             'return' => $this->getConfigData('label_return'),
             'free' => $this->getConfigData('label_free'),
             //'saturday' => $this->getConfigData('label_saturday'),
