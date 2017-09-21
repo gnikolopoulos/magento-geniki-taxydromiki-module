@@ -114,7 +114,7 @@ class ID_Geniki_Adminhtml_GenikiController extends Mage_Adminhtml_Controller_Act
 
 			// Έλεγχος για παράδοση Reception
 			if( $this->order->getShippingMethod() == 'id_geniki_reception' ) {
-				$extras[] = 'ΡΣ'; // Ελληνικά TODO
+				//$extras[] = 'ΡΣ'; // Ελληνικά TODO
 			}
 
 			// Έλεγχος για παράδοση Σαββατο
