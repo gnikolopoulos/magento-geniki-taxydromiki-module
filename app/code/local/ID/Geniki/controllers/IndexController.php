@@ -22,7 +22,7 @@ class ID_Geniki_IndexController extends Mage_Core_Controller_Front_Action
         $this->appkey = Mage::getStoreConfig('geniki/login/appkey');
         $this->api_url = Mage::getStoreConfig('geniki/login/api_url');
         $this->send_sms = Mage::getStoreConfig('geniki/sms/send_sms');
-        
+
         $this->sms_url = Mage::getStoreConfig('geniki/sms/sms_url');
 		$this->sms_user = Mage::getStoreConfig('geniki/sms/sms_user');
 		$this->sms_pass = Mage::getStoreConfig('geniki/sms/sms_pass');
@@ -64,34 +64,36 @@ class ID_Geniki_IndexController extends Mage_Core_Controller_Front_Action
 					->addAttributeToFilter('status', array('in' => array('complete')));
 
 		foreach ($order_collection as $order) {
-			$xml = array (
-                'authKey' => $this->auth_key,
-                'voucherNo' => $order->getTracksCollection()->getFirstItem()->getNumber(),
-                'language' => 'el'
-            );
-            $response = $this->soap->TrackAndTrace($xml);
-            $checkpoints = $response->TrackAndTraceResult->Checkpoints->Checkpoint;
+            if( substr($order->getShippingMethod(), 0, 10) === 'id_geniki_') {
+    			$xml = array (
+                    'authKey' => $this->auth_key,
+                    'voucherNo' => $order->getTracksCollection()->getFirstItem()->getNumber(),
+                    'language' => 'el'
+                );
+                $response = $this->soap->TrackAndTrace($xml);
+                $checkpoints = $response->TrackAndTraceResult->Checkpoints->Checkpoint;
 
-            if( $response->Result == 0 ) {
-    			if( $response->TrackAndTraceResult->Status == 'ΠΑΡΑΔΟΜΕΝΟ' ) {
-    				echo $order->getIncrementId() . ' Delivered<br />';
-    				$order->setStatus("delivered");
-    				$order->save();
-    			} else {
-                    foreach( $checkpoints as $points ) {
-                        if( $point->Status == 'Αδυναμία παράδοσης - Άρνηση Παραλαβής' || $point->Status == 'Επιστροφή στον αρχικό αποστολέα' ) {
-                            echo $order->getIncrementId() . ' Denied<br />';
-                            $order->setStatus("denied");
-                            $order->save();
-                            $this->sendDeniedEmail($order);
+                if( $response->Result == 0 ) {
+        			if( $response->TrackAndTraceResult->Status == 'ΠΑΡΑΔΟΜΕΝΟ' ) {
+        				echo $order->getIncrementId() . ' Delivered<br />';
+        				$order->setStatus("delivered");
+        				$order->save();
+        			} else {
+                        foreach( $checkpoints as $points ) {
+                            if( $point->Status == 'Αδυναμία παράδοσης - Άρνηση Παραλαβής' || $point->Status == 'Επιστροφή στον αρχικό αποστολέα' ) {
+                                echo $order->getIncrementId() . ' Denied<br />';
+                                $order->setStatus("denied");
+                                $order->save();
+                                $this->sendDeniedEmail($order);
 
-                            if( $this->send_sms ) {
-                                $this->sendSMS($order);
+                                if( $this->send_sms ) {
+                                    $this->sendSMS($order);
+                                }
+                                break;
                             }
-                            break;
                         }
-                    }
-    			}
+        			}
+                }
             }
 		}
     }
