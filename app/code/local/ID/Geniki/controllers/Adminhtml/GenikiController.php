@@ -102,11 +102,16 @@ class ID_Geniki_Adminhtml_GenikiController extends Mage_Adminhtml_Controller_Act
 			if( $this->order->getPayment()->getMethodInstance()->getCode() == 'cashondelivery' ) {
 				// Αντικαταβολή
 				if( $this->order->getFieldCustomPrice() !== NULL ) {
-					$amount = $this->order->getFieldCustomPrice();
+					if( $this->order->getFieldCustomPrice() < 0.1 ) {
+						$amount = 0;
+					} else {
+						$amount = $this->order->getFieldCustomPrice();
+						$extras[] = 'ΑΜ'; // Ελληνικά
+					}
 				} else {
 					$amount = $this->order->getGrandTotal();
+					$extras[] = 'ΑΜ'; // Ελληνικά
 				}
-				$extras[] = 'ΑΜ'; // Ελληνικά
 			} else {
 				// Άλλο
 				$amount = 0;
