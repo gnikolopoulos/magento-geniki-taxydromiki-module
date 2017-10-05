@@ -1,0 +1,11 @@
+<config>
+  <modules>
+    <ID_Genikicyprus>
+      <active>true</active>
+      <codePool>local</codePool>
+      <depends>
+        <ID_Geniki/>
+      </depends>
+    </ID_Genikicyprus>
+  </modules>
+</config>

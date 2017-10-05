@@ -1,8 +1,8 @@
 <?php
 
-class ID_Geniki_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstract implements Mage_Shipping_Model_Carrier_Interface {
+class ID_Genikicyprus_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstract implements Mage_Shipping_Model_Carrier_Interface {
 
-    protected $_code = 'id_geniki';
+    protected $_code = 'id_genikicyprus';
 
     public function collectRates( Mage_Shipping_Model_Rate_Request $request )
     {
@@ -16,12 +16,11 @@ class ID_Geniki_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstract imple
         //$request->getPackageValueWithDiscount(); //Get order total after discount
 
         $result->append($this->_getStandardShippingRate($request));
+        $result->append($this->_getFastShippingRate($request));
 
         if( Mage::app()->getStore()->isAdmin() || Mage::getDesign()->getArea() == 'adminhtml' ) {
             $result->append($this->_getReturnShippingRate($request));
             $result->append($this->_getFreeShippingRate($request));
-            //$result->append($this->_getSaturdayShippingRate($request));
-            //$result->append($this->_getExchangeShippingRate($request));
         }
 
         return $result;
@@ -52,7 +51,7 @@ class ID_Geniki_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstract imple
         return $rate;
     }
 
-    protected function _getReceptionShippingRate($data)
+    protected function _getFastShippingRate($data)
     {
         $rate = Mage::getModel('shipping/rate_result_method');
 
@@ -63,16 +62,16 @@ class ID_Geniki_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstract imple
          */
         $rate->setCarrierTitle($this->getConfigData('title'));
 
-        $rate->setMethod('reception');
-        $rate->setMethodTitle($this->getConfigData('label_reception'));
+        $rate->setMethod('fast');
+        $rate->setMethodTitle($this->getConfigData('label_fast'));
 
         if( $data->getPackageValueWithDiscount() >= floatval($this->getConfigData('free')) ) {
             $rate->setPrice(0);
         } else {
-            $rate->setPrice($this->getConfigData('price'));
+            $rate->setPrice($this->getConfigData('price_fast'));
         }
 
-        $rate->setCost($this->getConfigData('cost'));
+        $rate->setCost($this->getConfigData('cost_fast'));
 
         return $rate;
     }
@@ -117,59 +116,13 @@ class ID_Geniki_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstract imple
         return $rate;
     }
 
-    protected function _getSaturdayShippingRate($data)
-    {
-        $rate = Mage::getModel('shipping/rate_result_method');
-
-        $rate->setCarrier($this->_code);
-        /**
-         * getConfigData(config_key) returns the configuration value for the
-         * carriers/[carrier_code]/[config_key]
-         */
-        $rate->setCarrierTitle($this->getConfigData('title'));
-
-        $rate->setMethod('saturday');
-        $rate->setMethodTitle($this->getConfigData('label_saturday'));
-
-        $rate->setPrice($this->getConfigData('saturday_price'));
-        $rate->setCost($this->getConfigData('cost'));
-
-        return $rate;
-    }
-
-    protected function _getExchangeShippingRate($data)
-    {
-        $rate = Mage::getModel('shipping/rate_result_method');
-
-        $rate->setCarrier($this->_code);
-        /**
-         * getConfigData(config_key) returns the configuration value for the
-         * carriers/[carrier_code]/[config_key]
-         */
-        $rate->setCarrierTitle($this->getConfigData('title'));
-
-        $rate->setMethod('exchange');
-        $rate->setMethodTitle($this->getConfigData('label_exchange'));
-
-        if( $data->getPackageValueWithDiscount() >= floatval($this->getConfigData('free')) ) {
-            $rate->setPrice(0);
-        } else {
-            $rate->setPrice($this->getConfigData('price'));
-        }
-        $rate->setCost($this->getConfigData('cost'));
-
-        return $rate;
-    }
-
     public function getAllowedMethods()
     {
         return array(
             'standard' => $this->getConfigData('label_standard'),
-            //'reception' => $this->getConfigData('label_reception'),
+            'fast' => $this->getConfigData('label_fast'),
             'return' => $this->getConfigData('label_return'),
             'free' => $this->getConfigData('label_free'),
-            //'saturday' => $this->getConfigData('label_saturday'),
-            //'exchange' => $this->getConfigData('label_exchange'),
         );
     }
 

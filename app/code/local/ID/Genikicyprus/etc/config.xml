@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+        <ID_Genikicyprus>
+            <version>0.1.0</version>
+        </ID_Genikicyprus>
+    </modules>
+
+    <frontend>
+        <translate>
+            <modules>
+                <ID_Genikicyprus>
+                    <files>
+                        <default>ID_Genikicyprus.csv</default>
+                    </files>
+                </ID_Genikicyprus>
+            </modules>
+        </translate>
+    </frontend>
+
+	<adminhtml>
+        <translate>
+            <modules>
+                <ID_Genikicyprus>
+                    <files>
+                        <default>ID_Genikicyprus.csv</default>
+                    </files>
+                </ID_Genikicyprus>
+            </modules>
+        </translate>
+	</adminhtml>
+
+	<global>
+
+    	<helpers>
+        	<genikicyprus>
+          		<class>ID_Genikicyprus_Helper</class>
+        	</genikicyprus>
+      	</helpers>
+    </global>
+
+    <default>
+        <carriers>
+            <id_genikicyprus>
+                <active>0</active>
+                <model>id_genikicyprus/carrier</model>
+                <title>Γενική Ταχυδρομική - Κύπρος</title>
+                <sort_order>10</sort_order>
+                <sallowspecific>0</sallowspecific>
+            </id_genikicyprus>
+        </carriers>
+    </default>
+</config>

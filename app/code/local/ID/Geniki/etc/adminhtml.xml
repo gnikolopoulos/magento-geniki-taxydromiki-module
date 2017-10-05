@@ -20,13 +20,13 @@
                         <title>Γενική Ταχυδρομική</title>
                         <children>
                             <unprinted translate="title" module="geniki"><!-- this is the submenu item -->
-                                <title>Print Vouchers</title>
+                                <title>Εκτύπωση αποδεικτικών</title>
                             </unprinted>
                             <list translate="title" module="geniki"><!-- this is the submenu item -->
                                 <title>Οριστικοποίηση αποστολών</title>
                             </list>
                             <vouchers translate="title" module="geniki"><!-- this is the submenu item -->
-                                <title>Vouchers</title>
+                                <title>Αποδεικτικά</title>
                             </vouchers>
                             <antikatavoles translate="title" module="geniki"><!-- this is the submenu item -->
                                 <title>Αντικαταβολές</title>
