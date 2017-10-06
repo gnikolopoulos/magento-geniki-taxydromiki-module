@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+        <ID_Genikiintl>
+            <version>0.1.0</version>
+        </ID_Genikiintl>
+    </modules>
+
+    <frontend>
+        <translate>
+            <modules>
+                <ID_Genikiintl>
+                    <files>
+                        <default>ID_Genikiintl.csv</default>
+                    </files>
+                </ID_Genikiintl>
+            </modules>
+        </translate>
+    </frontend>
+
+	<adminhtml>
+        <translate>
+            <modules>
+                <ID_Genikiintl>
+                    <files>
+                        <default>ID_Genikiintl.csv</default>
+                    </files>
+                </ID_Genikiintls>
+            </modules>
+        </translate>
+	</adminhtml>
+
+	<global>
+
+    	<helpers>
+        	<genikiintl>
+          		<class>ID_Genikiintl_Helper</class>
+        	</genikiintl>
+      	</helpers>
+    </global>
+
+    <default>
+        <carriers>
+            <id_genikiintl>
+                <active>0</active>
+                <model>id_genikiintl/carrier</model>
+                <title>Γενική Ταχυδρομική - Διεθνείς Αποστολές</title>
+                <sort_order>10</sort_order>
+                <sallowspecific>0</sallowspecific>
+            </id_genikiintl>
+        </carriers>
+    </default>
+</config>

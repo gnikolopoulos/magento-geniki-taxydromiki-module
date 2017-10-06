@@ -1,11 +1,11 @@
 <config>
   <modules>
-    <ID_Geniki>
+    <ID_Genikiintl>
       <active>true</active>
       <codePool>local</codePool>
       <depends>
-        <Mage_Shipping />
+        <ID_Geniki/>
       </depends>
-    </ID_Geniki>
+    </ID_Genikiintl>
   </modules>
 </config>
