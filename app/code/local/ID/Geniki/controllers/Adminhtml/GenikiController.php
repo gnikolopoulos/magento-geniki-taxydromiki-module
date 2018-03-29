@@ -140,7 +140,7 @@ class ID_Geniki_Adminhtml_GenikiController extends Mage_Adminhtml_Controller_Act
 					'City'						=> $order_data['city'], // Περιοχή
 					'Telephone'					=> $order_data['telephone'], // Τηλέφωνο
 					'Zip'						=> $order_data['postcode'], // ΤΚ
-					'Pieces'					=> 1, // TODO
+					'Pieces'					=> count( $this->order->getAllVisibleItems() ),
 					'Weight'					=> 0.5, // TODO
 					'CodAmount'					=> floatval($amount), // Ποσό
 					'Comments'					=> ($this->order->getCustomerNote() ? $this->order->getCustomerNote() : ''),
@@ -182,6 +182,21 @@ class ID_Geniki_Adminhtml_GenikiController extends Mage_Adminhtml_Controller_Act
 						'is_printed'		=> 0,
 					);
 					Mage::getModel('id_geniki/voucher')->setData($voucher)->save();
+					
+					// Add subvouchers - if any - to Vourchers table
+					if( count($response->CreateJobResult->SubVouchers->Record) > 0 ) {
+						foreach( $response->CreateJobResult->SubVouchers->Record as $subvoucher ) {
+							$voucher = array(
+								'created_at'		=> date('d-m-Y H:i:s'),
+								'pod'						=> $subvoucher->VoucherNo,
+								'jobid'					=> $response->CreateJobResult->JobId,
+								'orderno'				=> $this->order->getIncrementId(),
+								'status'				=> 'Active',
+								'is_printed'		=> 0,
+							);
+							Mage::getModel('id_geniki/voucher')->setData($voucher)->save();
+						}
+					}
 
 					$this->_redirectReferer();
 					Mage::getSingleton('adminhtml/session')->addSuccess( $this->__('Created voucher for order #%s.Voucher: %s'.' '.$extra, $this->order->getIncrementId(), $response->CreateJobResult->Voucher) );
