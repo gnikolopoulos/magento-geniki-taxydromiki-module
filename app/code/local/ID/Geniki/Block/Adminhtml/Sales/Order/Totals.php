@@ -11,7 +11,7 @@ class ID_Geniki_Block_Adminhtml_Sales_Order_Totals extends Mage_Adminhtml_Block_
     {
         parent::_initTotals();
         $order = $this->getOrder();
-        if ($order->getFieldCustomPrice()) {
+        if ($order->getFieldCustomPrice() !== NULL ) {
             $this->addTotalBefore(new Varien_Object(array(
                 'code'      => 'geniki',
                 'value'     => $order->getFieldCustomPrice(),
