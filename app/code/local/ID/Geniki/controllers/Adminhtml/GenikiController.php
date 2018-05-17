@@ -186,7 +186,7 @@ class ID_Geniki_Adminhtml_GenikiController extends Mage_Adminhtml_Controller_Act
 					// Add subvouchers - if any - to Vourchers table
 					if( count($response->CreateJobResult->SubVouchers->Record) > 0 ) {
 						foreach( $response->CreateJobResult->SubVouchers->Record as $subvoucher ) {
-							$subvoucher = array(
+							$subvoucher_data = array(
 								'created_at'		=> date('d-m-Y H:i:s'),
 								'pod'				=> $subvoucher->VoucherNo,
 								'jobid'				=> $response->CreateJobResult->JobId,
@@ -194,8 +194,8 @@ class ID_Geniki_Adminhtml_GenikiController extends Mage_Adminhtml_Controller_Act
 								'status'			=> 'Active',
 								'is_printed'		=> 0,
 							);
-							Mage::getModel('id_geniki/voucher')->setData($subvoucher)->save();
-							$subvoucher = array();
+							Mage::getModel('id_geniki/voucher')->setData($subvoucher_data)->save();
+							$subvoucher_data = array();
 						}
 					}
 
