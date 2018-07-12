@@ -137,8 +137,7 @@ class ID_Geniki_Block_Adminhtml_Voucher_Grid extends Mage_Adminhtml_Block_Widget
      */
     public function getRowUrl($row)
     {
-        //return $this->getUrl('*/*/printVoucher', array('massnumber' => $row->getMassnumber()));
-        return false;
+        return $this->getUrl('*/sales_order/view', array('order_id' => Mage::getModel('sales/order')->load($row->getOrderno(), 'increment_id')->getId()));
     }
 
     /**
